@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    background: #0a0a0a;
+    touch-action: none; /* Отключаем скролл на мобилках */
+}
+
+#game {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    touch-action: none;
+}
+
+/* UI панели - адаптивные */
+#ui {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.stats-panel {
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid #fff;
+    color: #0f0;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    pointer-events: auto;
+    backdrop-filter: blur(4px);
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+/* Мобильная версия - увеличиваем панели */
+@media (max-width: 768px) {
+    .stats-panel {
+        font-size: 14px;
+        padding: 8px 14px;
+        font-weight: bold;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-panel {
+        font-size: 16px;
+        padding: 10px 16px;
+    }
+}
+
+/* Для очень маленьких экранов можно сократить текст */
+@media (max-width: 380px) {
+    .stats-panel {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+}
+
+/* Диалоговое окно - адаптивное */
+#textbox-container {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    z-index: 100;
+}
+
+@media (max-width: 768px) {
+    #textbox-container {
+        width: 95%;
+        bottom: 10px;
+    }
+}
+
+#textbox {
+    background: #000;
+    border: 3px solid #fff;
+    padding: 16px;
+}
+
+@media (max-width: 768px) {
+    #textbox {
+        padding: 12px;
+    }
+}
+
+#dialogue {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    font-family: 'Courier New', monospace;
+}
+
+@media (max-width: 768px) {
+    #dialogue {
+        font-size: 12px;
+    }
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.option-btn {
+    background: #000;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    text-align: left;
+    transition: all 0.1s ease;
+    touch-action: manipulation; /* Улучшаем тач */
+}
+
+@media (max-width: 768px) {
+    .option-btn {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}
+
+.option-btn:active {
+    background: #fff;
+    color: #000;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ui-close-btn {
+    background: #000;
+    border: 2px solid #f00;
+    color: #f00;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    touch-action: manipulation;
+}
+
+@media (max-width: 768px) {
+    .ui-close-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+}

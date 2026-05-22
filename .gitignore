@@ -1,0 +1,23 @@
+# Зависимости
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Сборка
+dist/
+dist-ssr/
+*.local
+
+# Файлы редакторов
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Файлы ОС
+.DS_Store
+Thumbs.db
