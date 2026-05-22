@@ -57,7 +57,7 @@ body {
 
 @media (max-width: 480px) {
     .stats-panel {
-        font-size: 16px;
+        font-size: 14px;
         padding: 10px 16px;
     }
 }
@@ -65,7 +65,7 @@ body {
 /* Для очень маленьких экранов можно сократить текст */
 @media (max-width: 380px) {
     .stats-panel {
-        font-size: 14px;
+        font-size: 12px;
         padding: 6px 10px;
     }
 

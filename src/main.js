@@ -71,7 +71,7 @@ k.scene("main", async () => {
               k.anchor("center"),
               k.pos(entity.x, entity.y),
               {
-                speed: 400,
+                speed: 250,
                 direction: 'down',
                 isInDialogue: false,
               },
