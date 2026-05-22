@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "./",
+  base: "/sales-simulator-128/",
   build: {
     minify: "terser",
   },
