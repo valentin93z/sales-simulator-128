@@ -18,11 +18,18 @@ k.loadSprite("spritesheet", "./spritesheet.png", {
   sliceX: 8,
   sliceY: 8,
   anims: {
-    "idle-down": 56,
-    "idle-side": 57,
-    "idle-up": 58,
+    "idle-down": 8,
+    "idle-side": 16,
+    "walk-side": { from: 48, to: 55, loop: true, speed: 8 },
+    "idle-up": 24,
   },
 });
+
+// ПРОВЕРКА: что анимации загрузились
+setTimeout(() => {
+  console.log("Available animations:", Object.keys(k.animations || {}));
+  console.log("walk-side config:", k.animations?.["walk-side"]);
+}, 1000);
 
 k.setBackground(k.Color.fromHex("#4b3862"));
 
@@ -99,9 +106,64 @@ k.scene("main", async () => {
           k.pos(boundary.x, boundary.y),
           boundary.name,
         ]);
+
+        if (boundary.name === "exit") {
+          const exitZone = gameMap.add([
+            k.area({ shape: new k.Rect(k.vec2(0), boundary.width || 50, boundary.height || 50) }),
+            k.body({ isStatic: true }),
+            k.pos(boundary.x, boundary.y),
+            "exitZone"
+          ]);
+
+          player.onCollide("exitZone", () => {
+            if (player.isInDialogue) return;
+            player.isInDialogue = true;
+
+            const options = [
+              { text: "🚬 Выйти покурить", value: "smoke", effect: "smokeBreak" },
+              { text: "🍕 Сходить на обед", value: "eat", effect: "lunchBreak" },
+              // { text: "🏠 Закончить смену", value: "end", effect: "endShift" },
+              { text: "🔙 Остаться на рабочем месте", value: "cancel", effect: null }
+            ];
+
+            displayDialogueWithOptions("Вы хотите покинуть торговый зал?", options, (choice) => {
+              if (choice === "cancel") {
+                displayDialogue("Хорошо, продолжаем работать!", () => {
+                  player.isInDialogue = false;
+                });
+              } else {
+                displayDialogue(getExitMessage(choice), () => {
+                  player.isInDialogue = false;
+                  // Здесь можно добавить эффекты
+                  if (choice === "end") {
+                    // Завершить смену
+                    endShift();
+                  }
+                });
+              }
+            });
+          });
+        }
       }
     }
   }
+
+  // Функция с сообщениями
+function getExitMessage(choice) {
+  const messages = {
+    smoke: "🚬 Вы вышли покурить... Через 5 минут вы вернулись освеженным!",
+    eat: "🍕 Вкусный перерыв! Вы подкрепились и готовы к новым продажам!",
+    end: "🏆 Рабочий день закончен! Завтра новые клиенты!"
+  };
+  return messages[choice] || "Вы вернулись на рабочее место.";
+}
+
+// Функция завершения смены
+function endShift() {
+  displayDialogue(`💰 Итог за день: ${money}₽\n📊 Продаж: ${salesCount}`, () => {
+    // Можно перезапустить день или показать статистику
+  });
+}
 
   for (const layer of layers) {
     if (layer.type === "tilelayer" && layer.data && layer.name === "furniture_top") {
@@ -189,14 +251,14 @@ k.scene("main", async () => {
 
     if (Math.abs(mouseAngle) > upperBound) {
       player.flipX = false;
-      player.play("idle-side");
+      if (player.curAnim() !== "walk-side") player.play("walk-side");
       player.direction = "right";
       return;
     }
 
     if (Math.abs(mouseAngle) < lowerBound) {
       player.flipX = true;
-      player.play("idle-side");
+      if (player.curAnim() !== "walk-side") player.play("walk-side");
       player.direction = "left";
       return;
     }
@@ -233,13 +295,13 @@ k.scene("main", async () => {
     if (k.isKeyDown("right")) {
       moveX = 1;
       player.flipX = false;
-      player.play("idle-side");
+      if (player.curAnim() !== "walk-side") player.play("walk-side");
       player.direction = "right";
     }
     if (k.isKeyDown("left")) {
       moveX = -1;
       player.flipX = true;
-      player.play("idle-side");
+      if (player.curAnim() !== "walk-side") player.play("walk-side");
       player.direction = "left";
     }
     if (k.isKeyDown("up")) {
