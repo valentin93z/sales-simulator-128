@@ -263,7 +263,7 @@
                 {
                  "height":128,
                  "id":17,
-                 "name":"exit",
+                 "name":"door",
                  "opacity":1,
                  "rotation":0,
                  "type":"",
@@ -335,7 +335,7 @@
                 {
                  "height":48,
                  "id":23,
-                 "name":"trig_exite",
+                 "name":"trig_exit",
                  "opacity":1,
                  "rotation":0,
                  "type":"",
