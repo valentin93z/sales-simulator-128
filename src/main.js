@@ -19,17 +19,12 @@ k.loadSprite("spritesheet", "./spritesheet.png", {
   sliceY: 8,
   anims: {
     "idle-down": 8,
+    "walk-down": { from: 40, to: 47, loop: true, speed: 12 },
     "idle-side": 16,
-    "walk-side": { from: 48, to: 55, loop: true, speed: 8 },
+    "walk-side": { from: 48, to: 55, loop: true, speed: 12 },
     "idle-up": 24,
   },
 });
-
-// ПРОВЕРКА: что анимации загрузились
-setTimeout(() => {
-  console.log("Available animations:", Object.keys(k.animations || {}));
-  console.log("walk-side config:", k.animations?.["walk-side"]);
-}, 1000);
 
 k.setBackground(k.Color.fromHex("#4b3862"));
 
@@ -39,11 +34,13 @@ k.scene("main", async () => {
   
   const gameMap = k.add([k.pos(0), k.scale(scaleFactor)]);
   const topLayer = k.add([k.pos(0), k.scale(scaleFactor)]);
+  const doorLayer = k.add([k.pos(0), k.scale(scaleFactor)]);
   const playerLayer = k.add([k.pos(0), k.scale(scaleFactor)]);
 
   gameMap.z = 0;
   playerLayer.z = 1;
   topLayer.z = 2;
+  doorLayer.z = 3;
   
   // Рисуем тайловые слои
   for (const layer of layers) {
@@ -106,47 +103,71 @@ k.scene("main", async () => {
           k.pos(boundary.x, boundary.y),
           boundary.name,
         ]);
-
-        if (boundary.name === "exit") {
-          const exitZone = gameMap.add([
-            k.area({ shape: new k.Rect(k.vec2(0), boundary.width || 50, boundary.height || 50) }),
-            k.body({ isStatic: true }),
-            k.pos(boundary.x, boundary.y),
-            "exitZone"
-          ]);
-
-          player.onCollide("exitZone", () => {
-            if (player.isInDialogue) return;
-            player.isInDialogue = true;
-
-            const options = [
-              { text: "🚬 Выйти покурить", value: "smoke", effect: "smokeBreak" },
-              { text: "🍕 Сходить на обед", value: "eat", effect: "lunchBreak" },
-              // { text: "🏠 Закончить смену", value: "end", effect: "endShift" },
-              { text: "🔙 Остаться на рабочем месте", value: "cancel", effect: null }
-            ];
-
-            displayDialogueWithOptions("Вы хотите покинуть торговый зал?", options, (choice) => {
-              if (choice === "cancel") {
-                displayDialogue("Хорошо, продолжаем работать!", () => {
-                  player.isInDialogue = false;
-                });
-              } else {
-                displayDialogue(getExitMessage(choice), () => {
-                  player.isInDialogue = false;
-                  // Здесь можно добавить эффекты
-                  if (choice === "end") {
-                    // Завершить смену
-                    endShift();
-                  }
-                });
-              }
-            });
-          });
-        }
       }
     }
   }
+
+  // Триггеры
+for (const layer of layers) {
+  if (layer.name === "triggers" && layer.objects) {
+    for (const trigger of layer.objects) {
+      // Создаем зону-триггер (только area, без body!)
+      const triggerZone = gameMap.add([
+        k.area({ 
+          shape: new k.Rect(k.vec2(0), trigger.width || 50, trigger.height || 50) 
+        }),
+        // НЕТ k.body() — игрок проходит сквозь!
+        k.pos(trigger.x, trigger.y),
+        trigger.name,
+        "trigger"
+      ]);
+
+      // Логика для конкретного триггера
+      if (trigger.name === "trig_exit") {
+        player.onCollide("trig_exit", () => {
+          if (player.isInDialogue) return;
+          
+          player.isInDialogue = true;
+
+          player.stop();
+          // Сбросить анимацию на idle
+          if (player.direction === "down") {
+            player.play("idle-down");
+          } else if (player.direction === "up") {
+            player.play("idle-up");
+          } else {
+            player.play("idle-side");
+          }
+          
+          const options = [
+            { text: "🚬 Выйти покурить", value: "smoke", effect: "smokeBreak" },
+            { text: "🍕 Сходить на обед", value: "eat", effect: "lunchBreak" },
+            { text: "🔙 Остаться на рабочем месте", value: "cancel", effect: null }
+          ];
+
+          displayDialogueWithOptions("Вы хотите покинуть торговый зал?", options, (choice) => {
+            if (choice === "cancel") {
+              displayDialogue("Хорошо, продолжаем работать!", () => {
+                player.isInDialogue = false;
+              });
+            } else {
+              displayDialogue(getExitMessage(choice), () => {
+                player.isInDialogue = false;
+              });
+            }
+          });
+        });
+      }
+      
+      // Можно добавить другие триггеры
+      // if (trigger.name === "trig_vitrina") {
+      //   player.onCollide("trig_vitrina", () => {
+      //     displayDialogue("Здесь представлены новинки этого сезона!", () => {});
+      //   });
+      // }
+    }
+  }
+}
 
   // Функция с сообщениями
 function getExitMessage(choice) {
@@ -181,6 +202,16 @@ function endShift() {
           { originalY: y },
           "reception"
         ]);
+
+        if (tileId === 26 || tileId === 27) {
+        doorLayer.add([
+          k.sprite("spritesheet", { frame: tileId - 1 }),
+          k.pos(x, y),
+          k.area(),
+          { originalY: y },
+          "door"
+        ]);
+        }
       }
     }
   }
@@ -244,7 +275,7 @@ function endShift() {
     }
 
     if (mouseAngle < -lowerBound && mouseAngle > -upperBound) {
-      player.play("idle-down");
+      if (player.curAnim() !== "walk-down") player.play("walk-down");
       player.direction = "down";
       return;
     }
@@ -311,7 +342,7 @@ function endShift() {
     }
     if (k.isKeyDown("down")) {
       moveY = 1;
-      player.play("idle-down");
+      if (player.curAnim() !== "walk-down") player.play("walk-down");
       player.direction = "down";
     }
     
