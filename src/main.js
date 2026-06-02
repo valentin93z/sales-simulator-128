@@ -1,6 +1,7 @@
 import { k } from "./kaboomCtx";
 import { scaleFactor, gameConfig } from "./constants";
 import { displayDialogue, displayDialogueWithOptions, setCamScale } from "./utils";
+import { startDialogue } from "./dialogueSystem";
 
 let money = gameConfig.startMoney;
 let salesCount = 0;
@@ -103,6 +104,15 @@ k.scene("main", async () => {
           k.pos(boundary.x, boundary.y),
           boundary.name,
         ]);
+
+        if (boundary.name === "vitrina7") {
+          player.onCollide("vitrina7", () => {
+            if (player.isInDialogue) return;
+            player.isInDialogue = true;
+            player.stop();
+            startDialogue("scene_1", () => { player.isInDialogue = false });
+          });
+        }
       }
     }
   }
@@ -177,13 +187,6 @@ function getExitMessage(choice) {
     end: "🏆 Рабочий день закончен! Завтра новые клиенты!"
   };
   return messages[choice] || "Вы вернулись на рабочее место.";
-}
-
-// Функция завершения смены
-function endShift() {
-  displayDialogue(`💰 Итог за день: ${money}₽\n📊 Продаж: ${salesCount}`, () => {
-    // Можно перезапустить день или показать статистику
-  });
 }
 
   for (const layer of layers) {
