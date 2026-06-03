@@ -15,15 +15,17 @@ function updateUI() {
 }
 
 // Загрузка спрайтов (без анимаций)
-k.loadSprite("spritesheet", "./spritesheet.png", {
+k.loadSprite("spritesheet", "./spritesheet.png", { sliceX: 8, sliceY: 8 });
+
+k.loadSprite("player", "./characters main.png", {
   sliceX: 8,
   sliceY: 8,
   anims: {
-    "idle-down": 8,
-    "walk-down": { from: 40, to: 47, loop: true, speed: 12 },
-    "idle-side": 16,
-    "walk-side": { from: 48, to: 55, loop: true, speed: 12 },
-    "idle-up": 24,
+    "idle-down": 0,
+    "walk-down": { from: 8, to: 15, loop: true, speed: 12 },
+    "idle-side": 1,
+    "walk-side": { from: 16, to: 23, loop: true, speed: 12 },
+    "idle-up": 2,
   },
 });
 
@@ -70,7 +72,7 @@ k.scene("main", async () => {
         for (const entity of layer.objects) {
           if (entity.name === "spawn") {
             player = k.make([
-              k.sprite("spritesheet", { anim: 'idle-down' }),
+              k.sprite("player", { anim: 'idle-down' }),
               k.area({ shape: new k.Rect(k.vec2(0, 20), 80, 80) }),
               k.body(),
               k.anchor("center"),
@@ -206,7 +208,7 @@ function getExitMessage(choice) {
           "reception"
         ]);
 
-        if (tileId === 26 || tileId === 27) {
+        if (tileId === 5 || tileId === 6) {
         doorLayer.add([
           k.sprite("spritesheet", { frame: tileId - 1 }),
           k.pos(x, y),
