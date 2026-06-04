@@ -26,6 +26,7 @@ k.loadSprite("player", "./characters main.png", {
     "idle-side": 1,
     "walk-side": { from: 16, to: 23, loop: true, speed: 12 },
     "idle-up": 2,
+    "walk-up": { from: 24, to: 31, loop: true, speed: 12 },
   },
 });
 
@@ -274,7 +275,7 @@ function getExitMessage(choice) {
 
     // Меняем спрайт в зависимости от направления движения
     if (mouseAngle > lowerBound && mouseAngle < upperBound) {
-      player.play("idle-up");
+      if (player.curAnim() !== "walk-up") player.play("walk-up");
       player.direction = "up";
       return;
     }
@@ -342,7 +343,7 @@ function getExitMessage(choice) {
     }
     if (k.isKeyDown("up")) {
       moveY = -1;
-      player.play("idle-up");
+      if (player.curAnim() !== "walk-up") player.play("walk-up");
       player.direction = "up";
     }
     if (k.isKeyDown("down")) {
