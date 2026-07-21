@@ -30,6 +30,14 @@ k.loadSprite("player", "./characters main.png", {
   },
 });
 
+k.loadSprite("npc", "./characters_client_empty.png", {
+  sliceX: 8,
+  sliceY: 8,
+  anims: {
+    "idle-down": 0,
+  },
+});
+
 k.setBackground(k.Color.fromHex("#4b3862"));
 
 k.scene("main", async () => {
@@ -95,6 +103,40 @@ k.scene("main", async () => {
     }
   }
 
+  // Обрабатываем слой npcs
+  for (const layer of layers) {
+    if (layer.name === "npc" && layer.objects) {
+      for (const npcData of layer.objects) {
+        // Создаём NPC
+        const npc = k.add([
+          k.sprite("npc"),
+          k.area({ shape: new k.Rect(k.vec2(0), 64, 64) }),
+          k.body({ isStatic: true }),
+          k.pos(npcData.x, npcData.y),
+          k.anchor("center"),
+          "npc",
+          {
+            dialogueId: npcData.properties?.dialogue || "scene_1",
+            type: npcData.properties?.type || "customer",
+          }
+        ]);
+        
+        console.log(`NPC создан на позиции: (${npcData.x}, ${npcData.y})`);
+      }
+    }
+  }
+
+  player.onCollide("npc", (npc) => {
+    if (player.isInDialogue) return;
+    
+    player.isInDialogue = true;
+    player.stop();
+    
+    startDialogue(npc.dialogueId || "scene_1", () => {
+      player.isInDialogue = false;
+    });
+  });
+
   // Стены
   for (const layer of layers) {
     if (layer.name === "interier_objects" && layer.objects) {
@@ -108,14 +150,14 @@ k.scene("main", async () => {
           boundary.name,
         ]);
 
-        if (boundary.name === "vitrina7") {
-          player.onCollide("vitrina7", () => {
-            if (player.isInDialogue) return;
-            player.isInDialogue = true;
-            player.stop();
-            startDialogue("scene_1", () => { player.isInDialogue = false });
-          });
-        }
+        // if (boundary.name === "vitrina7") {
+        //   player.onCollide("vitrina7", () => {
+        //     if (player.isInDialogue) return;
+        //     player.isInDialogue = true;
+        //     player.stop();
+        //     startDialogue("scene_1", () => { player.isInDialogue = false });
+        //   });
+        // }
       }
     }
   }
