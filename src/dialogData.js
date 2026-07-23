@@ -10,6 +10,178 @@ export const dialogData = [
   {
     title: 'scene_1',
     seller: [
+      {id: 'scene_1_seller_p1', talk: 'Добрый день! Что-то подсказать?', type: 'dialog', to: 'scene_2'},
+      {id: 'scene_1_seller_p2', talk: 'Добрый день! Вы к нам на экскурсию или за покупкой?', type: 'dialog', to: getRandomElement(['scene_3', 'scene_8'])},
+      {id: 'scene_1_seller_p3', talk: 'Добырй день! Нужна помощь?', type: 'dialog', to: 'scene_2'},
+      {id: 'scene_1_seller_p4', talk: 'Здравствйте! Вы уже определились с выбором или Вам нужна консультация?', type: 'dialog', to: getRandomElement(['scene_3', 'scene_8'])},
+      {id: 'scene_1_seller_p5', talk: 'Здравствуйте! Вас что-то конкретное интересует?', type: 'dialog', to: 'scene_2'},
+    ],
+    client: [
+      {id: 'scene_1_client_p1', talk: 'Добрый день! Пока нет.', to: 'scene_2'},
+      {id: 'scene_1_client_p2', talk: 'Нет.', to: 'scene_2'},
+      {id: 'scene_1_client_p3', talk: 'Займите денег?', to: 'scene_2'},
+      {id: 'scene_1_client_p4', talk: 'Добрый день! Да вот присматриваю, хочу поменять свой телефон.', to: 'scene_8'},
+      {id: 'scene_1_client_p5', talk: 'Добрый день! Просто смотрю.', to: 'scene_3'},
+    ],
+  },
+
+  { title: 'scene_2', seller: [], client: [], message: { type: 'error', text: 'Использование закрытых вопросов.', next: 'scene_1' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_3',
+    seller: [
+      {id: 'scene_3_seller_p1', talk: 'Хорошо. У нас не все на витринах. Если что можно оформить заказ. Какую модель ищите?', type: 'dialog', to: getRandomElement(['scene_5', 'scene_8'])},
+      {id: 'scene_3_seller_p2', talk: 'Хорошо. Что-то подсказать?', type: 'dialog', to: 'scene_4'},
+    ],
+    client: [
+      {id: 'scene_3_client_p1', talk: 'Просто присматриваю телефон.', to: 'scene_8'},
+      {id: 'scene_3_client_p2', talk: 'У Вас есть смартфон Redmi?', to: 'scene_5'},
+    ],
+  },
+
+  { title: 'scene_4', seller: [], client: [], message: { type: 'error', text: 'Использование закрытых вопросов.', next: 'scene_3' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_5',
+    seller: [
+      {id: 'scene_5_seller_p1', talk: 'Есть под заказ. Скажите, если я предложу Вам вариант, который будет по характеристикам лучше, а по цене приятней. Вы рассмотрите его?', type: 'dialog', to: getRandomElement(['scene_7', 'scene_8'])},
+      {id: 'scene_5_seller_p2', talk: 'К сожалению нет. Но можно заказать', type: 'dialog', to: 'scene_6'},
+    ],
+    client: [
+      {id: 'scene_5_client_p1', talk: 'Да можно посмотреть.', to: 'scene_8'},
+      {id: 'scene_5_client_p2', talk: 'Нет, мне нужен именно этот', to: 'scene_7'},
+      {id: 'scene_5_client_p3', talk: 'Я не хочу ждать.', to: 'scene_6'},
+    ],
+  },
+
+  { title: 'scene_6', seller: [], client: [], message: { type: 'error', text: 'Клиент ушел (Вы не предприняли попытку переориентировать клиента).', next: 'scene_5' }, emotion: 'unhappy' },
+
+  { title: 'scene_7', seller: [], client: [], message: {type: 'success', text: 'Вы сделали все правильно. На витрине не представлен интересующий вариант клиента.', next: 'scene_8'}, emotion: 'unhappy' },
+
+  {
+    title: 'scene_8',
+    seller: [
+      {id: 'scene_8_seller_p1', talk: 'Вам подороже или подешевле?', type: 'dialog', to: 'scene_9'},
+      {id: 'scene_8_seller_p2', talk: 'В рамках какого бюджета присматриваете покупку?', type: 'dialog', to: 'scene_9'},
+      {id: 'scene_8_seller_p3', talk: 'Себе или в подарок присматриваете?', type: 'dialog', to: 'scene_10'},
+    ],
+    client: [
+      {id: 'scene_8_client_p1', talk: 'Себе присматриваю.', to: 'scene_10'},
+    ],
+  },
+
+  { title: 'scene_9', seller: [], client: [], message: { type: 'error', text: 'Неправильная отработка воронки вопросов.', next: 'scene_8' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_10',
+    seller: [
+      {id: 'scene_10_seller_p1', talk: 'Тогда берите вот этот TECNO Camon 30S.', type: 'dialog', to: 'scene_11'},
+      {id: 'scene_10_seller_p2', talk: 'Вижу, что Вам нужен недорогой вариант - берите Infinix Smart 10, вам его хватит.', type: 'dialog', to: 'scene_12'},
+      {id: 'scene_10_seller_p3', talk: 'Есть предпочтения по бренду/фирме производителю?', type: 'dialog', to: 'scene_13'},
+    ],
+    client: [
+      {id: 'scene_10_client_p1', talk: 'Я раньше пользовался Redmi. Но в принципе рассмотрел бы и другие модели.', to: 'scene_13'},
+    ],
+  },
+
+  { title: 'scene_11', seller: [], client: [], message: { type: 'error', text: 'Нарушение этапов работы', next: 'scene_10' }, emotion: 'unhappy' },
+
+  { title: 'scene_12', seller: [], client: [], message: { type: 'error', text: 'Запрещено принимать решения за клиента', next: 'scene_10' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_13',
+    seller: [
+      {id: 'scene_13_seller_p1', talk: 'Ой, мне Redmi не нравятся, возьмите лучше Iphone - это самые лучшие телефоны.', type: 'dialog', to: 'scene_14'},
+      {id: 'scene_13_seller_p2', talk: 'Как чаще всего используете телефон, кроме звонков и мессенджеров?', type: 'dialog', to: 'scene_16'},
+      {id: 'scene_13_seller_p3', talk: 'Вот есть отличный вариант - Redmi Note 14.', type: 'dialog', to: 'scene_15'},
+    ],
+    client: [
+      {id: 'scene_13_client_p1', talk: 'Пользуюсь камерой, смотрю фильмы, ролики.', to: 'scene_16'},
+    ],
+  },
+
+  { title: 'scene_14', seller: [], client: [], message: { type: 'error', text: 'Нарушение этапов работы. Выявлены не все потребности. Запрещено критиковать бренды, представленные в нашей сети.', next: 'scene_13' }, emotion: 'unhappy' },
+  { title: 'scene_15', seller: [], client: [], message: { type: 'error', text: 'Нарушение этапности работы. Не полностью выявленные потребности.', next: 'scene_13' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_16',
+    seller: [
+      {id: 'scene_16_seller_p1', talk: 'Тогда предлагаю рассмотреть Honor 600 Lite.', type: 'dialog', to: 'scene_17'},
+      {id: 'scene_16_seller_p2', talk: 'Получается, Вам нужен телефон с хорошей камерой, хорошим экраном и звуком, верно?', type: 'dialog', to: 'scene_17'},
+      {id: 'scene_16_seller_p3', talk: 'Сейчас в телефонах много различных фишек камеры и специальные дополнительные объективы для фото с близкого или дальнего расстояния - что, обычно, фотографируете?', type: 'dialog', to: 'scene_18'},
+    ],
+    client: [
+      {id: 'scene_16_client_p1', talk: 'Селфи и обычные фото со среднего расстояния.', to: 'scene_18'},
+    ],
+  },
+
+  { title: 'scene_17', seller: [], client: [], message: { type: 'error', text: 'Нарушение этапности работы. Не полностью выявленные потребности.', next: 'scene_13' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_18',
+    seller: [
+      {id: 'scene_18_seller_p1', talk: 'Для фото отлично подойдёт Samsung S26 Ultra.', type: 'dialog', to: 'scene_19'},
+      {id: 'scene_18_seller_p2', talk: 'Тогда Вам любой подойдёт, можете выбирать на витрине.', type: 'dialog', to: 'scene_20'},
+      {id: 'scene_18_seller_p3', talk: 'Какие характеристики желательны в новом телефоне?', type: 'dialog', to: 'scene_21'},
+    ],
+    client: [
+      {id: 'scene_18_client_p1', talk: 'Хочу ярче экран, мощнее звук и больше памяти.', to: 'scene_21'},
+    ],
+  },
+
+  { title: 'scene_19', seller: [], client: [], message: { type: 'error', text: 'Нарушение этапности работы. Не полностью выявленные потребности.', next: 'scene_18' }, emotion: 'unhappy' },
+
+  { title: 'scene_20', seller: [], client: [], message: { type: 'error', text: 'Ошибочный вариант.', next: 'scene_18' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_21',
+    seller: [
+      {id: 'scene_21_seller_p1', talk: 'Возьмите Samsung S26 Ultra на 1 Тб.', type: 'dialog', to: 'scene_22'},
+      {id: 'scene_21_seller_p2', talk: 'У телефонов характеристики плюс-минус одинаковые, выбирайте, какой нравится по дизайну.', type: 'dialog', to: 'scene_23'},
+      {id: 'scene_21_seller_p3', talk: 'Покупку планируете за наличку или в рассрочку без переплаты?', type: 'dialog', to: 'scene_24'},
+    ],
+    client: [
+      {id: 'scene_21_client_p1', talk: 'За наличные.', to: 'scene_24'},
+    ],
+  },
+
+  { title: 'scene_22', seller: [], client: [], message: { type: 'error', text: 'Нарушение этапности работы. Не полностью выявленные потребности.', next: 'scene_21' }, emotion: 'unhappy' },
+
+  { title: 'scene_23', seller: [], client: [], message: { type: 'error', text: 'Выявлены не все потребности, Критическая ошибка при общении с клиентом.', next: 'scene_21' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_24',
+    seller: [
+      {id: 'scene_24_seller_p1', talk: 'В рамках какого бюджета рассматриваете покупку?', type: 'dialog', to: 'scene_25'},
+    ],
+    client: [
+      {id: 'scene_24_client_p1', talk: 'До 25 т.р.', to: 'scene_25'},
+    ],
+  },
+
+  {
+    title: 'scene_25',
+    seller: [
+      {id: 'scene_25_seller_p1', talk: 'Если я Вас правильно понял, выбирать будем что-то из Redmi, но можно и другие. Главное чтобы там была хорошя камера, чтобы был шустрый, с ярким экраном и мощным звуком, до 25 т.р. Все правильно?', type: 'dialog', to: 'scene_27'},
+      {id: 'scene_25_seller_p2', talk: 'Я уверен, что Вам нужен Redmi, с хорошим процессором...', type: 'dialog', to: 'scene_26'},
+      {id: 'scene_25_seller_p3', talk: 'Исходя из того что Вы мне сказали, могу вам предложить Redmi, с хорошим процессором...', type: 'dialog', to: 'scene_26'},
+    ],
+    client: [
+      {id: 'scene_25_client_p1', talk: 'Да.', to: 'scene_27'},
+    ],
+  },
+
+  { title: 'scene_26', seller: [], client: [], message: { type: 'error', text: 'Некорректное резюмирование потребности.', next: 'scene_25' }, emotion: 'unhappy' },
+
+
+];
+
+
+
+export const dialogData_old = [
+  {
+    title: 'scene_1',
+    seller: [
       {id: 'scene_1_seller_p1', talk: 'Добырй день! Нужна помощь?', type: 'dialog', to: 'scene_2'},
       {id: 'scene_1_seller_p2', talk: 'Добрый день! Что-то подсказать?', type: 'dialog', to: 'scene_3'},
       {id: 'scene_1_seller_p3', talk: 'Добрый день! Вы к нам на экскурсию или за покупкой?', type: 'dialog', to: getRandomElement(['scene_4', 'scene_5'])},
