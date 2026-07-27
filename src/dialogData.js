@@ -173,6 +173,259 @@ export const dialogData = [
 
   { title: 'scene_26', seller: [], client: [], message: { type: 'error', text: 'Некорректное резюмирование потребности.', next: 'scene_25' }, emotion: 'unhappy' },
 
+  {
+    title: 'scene_27',
+    seller: [
+      {id: 'scene_27_seller_p1', talk: 'Тут будет проц Snapdragon 6s 4G Gen 2, 2.9 ГГц, 4 нм, 8/256, Amoled, 108 МП и 7000 мАч - цена как раз в вашем бюджете.', type: 'dialog', to: 'scene_28'},
+      {id: 'scene_27_seller_p2', talk: 'Исходя из того, что вы мне сказали, я могу предложить вам несколько вариантов, можем посмотреть Redmi Note 15 и Honor X8d.', type: 'dialog', to: 'scene_29'},
+    ],
+    client: [
+      {id: 'scene_27_client_p1', talk: '...', to: 'scene_29'},
+    ],
+  },
+
+  { title: 'scene_28', seller: [], client: [], message: { type: 'error', text: 'Клиент ничего не понял и ушёл', next: 'scene_27' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_29',
+    seller: [
+      {id: 'scene_29_seller_p1', talk: 'В этих телефонах установлены камеры с разрешением 108 МП, что позволяет делать хорошие снимки.', type: 'dialog', to: 'scene_30'},
+      {id: 'scene_29_seller_p2', talk: 'Вы говорили, что для Вас важна хорошая камера. В Honor X8d установлена камера с разрешением 108 МП, которая позволит делать детализированные фото. Например, при увеличении фото дерева, вы сможете разглядеть каждый листочек.', type: 'dialog', to: 'scene_32'},
+      {id: 'scene_29_seller_p3', talk: 'В этом телефоне будет хорошая камера, мощный процессор и большая батарея.', type: 'dialog', to: 'scene_31'},
+    ],
+    client: [
+      {id: 'scene_29_client_p1', talk: '...', to: 'scene_32'},
+    ],
+  },
+
+  { title: 'scene_30', seller: [], client: [], message: { type: 'error', text: 'В данном примере нет ссылки на потребность клиента и выгоды устройства.', next: 'scene_29' }, emotion: 'unhappy' },
+
+  { title: 'scene_31', seller: [], client: [], message: { type: 'error', text: 'В данном примере нет ссылки на потребность клиента, не раскрыты характеристики и выгода для клиента.', next: 'scene_29' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_32',
+    seller: [
+      {id: 'scene_32_seller_p1', talk: 'Тут установлен мощный процессор Snapdragon 6s 4G Gen 2.', type: 'dialog', to: 'scene_33'},
+      {id: 'scene_32_seller_p2', talk: 'Для Вас важно чтобы телефон шустро работал - за это здесь отвечает процессор Snapdragon 6s 4G Gen 2, а также 8 Гб оперативной памяти с виртуальным расширением до 16ти, которые позволят устройство запускать параллельно хоть 10 приложений, а также он будет оставаться актуальным до 5 лет точно. при этом никаких подвисаний не будет.', type: 'dialog', to: 'scene_35'},
+      {id: 'scene_32_seller_p3', talk: 'Также Вы еще говорили, для Вас важно чтобы телефон шустро работал, в Honor X8d установлен процессор Snapdragon 6s 4G Gen 2, а также 8 Гб оперативной памяти.', type: 'dialog', to: 'scene_34'},
+    ],
+    client: [
+      {id: 'scene_32_client_p1', talk: '...', to: 'scene_35'},
+    ],
+  },
+
+  { title: 'scene_33', seller: [], client: [], message: { type: 'error', text: 'В данном примере нет ссылки на потребность клиента и выгоды устройства.', next: 'scene_32' }, emotion: 'unhappy' },
+
+  { title: 'scene_34', seller: [], client: [], message: { type: 'error', text: 'В данном примере не озвучены выгоды.', next: 'scene_32' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_35',
+    seller: [
+      {id: 'scene_35_seller_p1', talk: 'На этот телефон раньше была хорошая скидка, но пока акция закончилась.', type: 'dialog', to: 'scene_36'},
+      {id: 'scene_35_seller_p2', talk: 'Кроме того, там стоит быстрая зарядка мощностью 45 Вт, благодаря чему от 0% до 100% устройство будет заряжаться примерно 1 час, что достаточно быстро, т.к. пока Вы пьете чай или кофе телефон зарядится на 50% и Вы сможете еще целый день им пользоваться.', type: 'dialog', to: 'scene_38'},
+      {id: 'scene_35_seller_p3', talk: 'В общем, нормальный телефон за такие деньги, будете брать?', type: 'dialog', to: 'scene_37'},
+    ],
+    client: [
+      {id: 'scene_35_client_p1', talk: '...', to: 'scene_38'},
+    ],
+  },
+
+  { title: 'scene_36', seller: [], client: [], message: { type: 'error', text: 'Клиент ушёл ждать новую акцию.', next: 'scene_35' }, emotion: 'unhappy' },
+
+  { title: 'scene_37', seller: [], client: [], message: { type: 'error', text: 'В данном примере используется набор слов не связанных с характеристиками и выгодами.', next: 'scene_35' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_38',
+    seller: [
+      {id: 'scene_38_seller_p1', talk: 'Я его сейчас достану, посмотрите, как в нём работают фишки, интерфейс системы и как вообще в руке лежит.', type: 'dialog', to: getRandomElement(['scene_40', 'scene_41'])},
+      {id: 'scene_38_seller_p2', talk: 'Давайте достанем его и посмотрим поближе.', type: 'dialog', to: getRandomElement(['scene_40', 'scene_41'])},
+      {id: 'scene_38_seller_p3', talk: 'Что скажете? Оформляем?', type: 'dialog', to: 'scene_39'},
+    ],
+    client: [
+      {id: 'scene_38_client_p1', talk: 'По-моему у Вас немного дороже все стоит. Вроде, эту же модель я видел дешевле...', to: 'scene_41'},
+      {id: 'scene_38_client_p2', talk: 'Не нужно. Я просто так, пока покупать не буду.', to: 'scene_40'},
+    ],
+  },
+
+  { title: 'scene_39', seller: [], client: [], message: { type: 'error', text: 'Нарушение этапности работы.', next: 'scene_38' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_40',
+    seller: [
+      {id: 'scene_40_seller_p1', talk: 'Вообще это очень популярная модель, я такую брал своему брату в подарок. Для него тоже важна была камера. Давайте посмотрим камеру, чтобы у Вас было представление, как она снимает?', type: 'dialog', to: 'scene_51'},
+      {id: 'scene_40_seller_p2', talk: 'Давайте достанем посмотрим фишки, подержите его в руках, чтобы у Вас уже было представление, что он из себя представляет?', type: 'dialog', to: 'scene_51'},
+    ],
+    client: [
+      {id: 'scene_40_client_p1', talk: 'Давайте.', to: 'scene_51'},
+    ],
+  },
+
+  {
+    title: 'scene_41',
+    seller: [
+      {id: 'scene_41_seller_p1', talk: 'В других магазинах нет гарантии, а у нас есть.', type: 'dialog', to: 'scene_42'},
+      {id: 'scene_41_seller_p2', talk: 'Вы ошибаетесь. Везде цены одинаковые.', type: 'dialog', to: 'scene_43'},
+      {id: 'scene_41_seller_p3', talk: 'Понял. Если не секрет, в каком магазине видели дешевле? И какая там был цена?', type: 'dialog', to: getRandomElement(['scene_44', 'scene_48'])},
+    ],
+    client: [
+      {id: 'scene_41_client_p1', talk: 'Хорошо, спасибо, я подумаю.', to: 'scene_42'},
+      {id: 'scene_41_client_p2', talk: 'Хорошо, спасибо, я подумаю.', to: 'scene_43'},
+      {id: 'scene_41_client_p3', talk: 'В соседнем магазине.', to: 'scene_44'},
+      {id: 'scene_41_client_p4', talk: 'На Wildberries.', to: 'scene_48'},
+    ],
+  },
+
+  { title: 'scene_42', seller: [], client: [], message: { type: 'error', text: 'Клиент ушел (Клиент пошел узнавать, есть ли в других магазинах гарантия).', next: 'scene_41' }, emotion: 'unhappy' },
+
+  { title: 'scene_43', seller: [], client: [], message: { type: 'error', text: 'Клиент ушел (Некорректная отработка возражений).', next: 'scene_41' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_44',
+    seller: [
+      {id: 'scene_44_seller_p1', talk: 'Ну незнаю, везде цены одинаковые.', type: 'dialog', to: 'scene_45'},
+      {id: 'scene_44_seller_p2', talk: 'Согласен, есть много похожих моделей в разной комплектации, сейчас легко запутаться. Это вариант в комплектации на 8/256 Гб с процессоромSnapdragon 6s 4G Gen 2. У Honor есть визуально похожие модели, но с более простым процессором, аккумулятором и памятью на 6/128. Вы видели именно эту комплектацию?', type: 'dialog', to: 'scene_46'},
+    ],
+    client: [
+      {id: 'scene_44_client_p1', talk: 'Да, я видел именно эту комплектацию.', to: 'scene_46'},
+    ],
+  },
+
+  { title: 'scene_45', seller: [], client: [], message: { type: 'error', text: 'Клиент ушел. (Клиент пошел покупать более дешевое по стоимости устройство).', next: 'scene_44' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_46',
+    seller: [
+      {id: 'scene_46_seller_p1', talk: 'Кстати, да, еще встречаются в продаже несертифицированные устройства. Это значит - без официальной гарантии в России и без поддержки обновлений.', type: 'dialog', to: 'scene_47'},
+    ],
+    client: [
+      {id: 'scene_46_client_p1', talk: '...', to: 'scene_47'},
+    ],
+  },
+
+  {
+    title: 'scene_47',
+    seller: [
+      {id: 'scene_47_seller_p1', talk: 'Давайте посмотрим ближе, я покажу, как отличить устройство с гарантией и без?', type: 'dialog', to: 'scene_'},
+    ],
+    client: [
+      {id: 'scene_47_client_p1', talk: 'Давайте.', to: 'scene_'},
+    ],
+  },
+
+  {
+    title: 'scene_48',
+    seller: [
+      {id: 'scene_48_seller_p1', talk: 'Как правило, на маркетплейсе продают устройства без официальной гарантии, а если гарантия есть, то по гарантии Вам придется обращаться не в магазин, а сервисный центр самого производителя. Знаете, где находится авторизованный СЦ?', type: 'dialog', to: 'scene_49'},
+    ],
+    client: [
+      {id: 'scene_48_client_p1', talk: '...', to: 'scene_49'},
+    ],
+  },
+
+  {
+    title: 'scene_49',
+    seller: [
+      {id: 'scene_49_seller_p1', talk: 'Поэтому, когда подумаете, приходите, посмотрим устройство поближе.', type: 'dialog', to: 'scene_50'},
+      {id: 'scene_49_seller_p2', talk: 'Давайте посмотрим поближе, я покажу, как отличить устройство с гарантией и без?', type: 'dialog', to: 'scene_51'},
+    ],
+    client: [
+      {id: 'scene_49_client_p1', talk: 'Давайте.', to: 'scene_51'},
+    ],
+  },
+
+  { title: 'scene_50', seller: [], client: [], message: { type: 'error', text: 'Клиент ушел (Вы не предприняли попытки убедить клиента посмотреть устройство поближе).', next: 'scene_49' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_51',
+    seller: [
+      {id: 'scene_51_seller_p1', talk: 'Сами сможете настроить устройство, чтобы данные не потерялись и активровалась стандартная гарантия от производителя?', type: 'dialog', to: 'scene_53'},
+      {id: 'scene_51_seller_p2', talk: 'Кстати, благодаря последней версии ОС, в устройстве есть функция увеличения оперативной и встроенной памяти. Благодаря этому, устройство сможет работать быстрее и открывать больше приложений. Для этого нужно правильно активировать устройство.', type: 'dialog', to: 'scene_55'},
+      {id: 'scene_51_seller_p3', talk: 'Мы сразу активируем вам аккаунт, перенесем данные.', type: 'dialog', to: 'scene_52'},
+    ],
+    client: [
+      {id: 'scene_51_client_p1', talk: 'Да, сам сделаю.', to: 'scene_53'},
+      {id: 'scene_51_client_p2', talk: '...', to: 'scene_55'},
+    ],
+  },
+
+  { title: 'scene_52', seller: [], client: [], message: { type: 'error', text: 'Некорректное предложение настроек.', next: 'scene_51' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_53',
+    seller: [
+      {id: 'scene_53_seller_p1', talk: 'Если Вы что-то не так сделаете, устройство может превратиться в кирпич.', type: 'dialog', to: 'scene_54'},
+      {id: 'scene_53_seller_p2', talk: 'Согласен, можно сделать самостоятельно. Обычно настройка занимает 2-3 часа: обновления, регистрация аккаунтов, отключение рекламы, настройка уведомлений, перенос контактов, персонализация интерфейса. Я делаю это за 15 минут. Потратить несколько часов жизни и свои нервы, если что-то пойдёт не так – или через 15 минут начать пользоваться готовым телефоном.', type: 'dialog', to: 'scene_55'},
+    ],
+    client: [
+      {id: 'scene_53_client_p1', talk: '...', to: 'scene_55'},
+    ],
+  },
+
+  { title: 'scene_54', seller: [], client: [], message: { type: 'error', text: 'Некорректная отработка возражений. Не правильная аргументация.', next: 'scene_53' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_55',
+    seller: [
+      {id: 'scene_55_seller_p1', talk: 'Что скажете? Оформляем?', type: 'dialog', to: getRandomElement(['scene_56', 'scene_58'])},
+    ],
+    client: [
+      {id: 'scene_55_client_p1', talk: 'Да.', to: 'scene_56'},
+      {id: 'scene_55_client_p2', talk: 'Мне нужно подумать.', to: 'scene_58'},
+    ],
+  },
+
+  {
+    title: 'scene_56',
+    seller: [
+      {id: 'scene_56_seller_p1', talk: 'Отличный выбор!', type: 'dialog', to: 'scene_62'},
+      {id: 'scene_56_seller_p2', talk: 'Хорошо. Аксессуары будете брать?', type: 'dialog', to: 'scene_57'},
+    ],
+    client: [
+      {id: 'scene_56_client_p1', talk: '...', to: 'scene_62'},
+    ],
+  },
+
+  { title: 'scene_57', seller: [], client: [], message: { type: 'error', text: 'Некорректное и несвоевременное предложение аксессуаров.', next: 'scene_56' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_58',
+    seller: [
+      {id: 'scene_58_seller_p1', talk: 'Не устроила цена или качество?', type: 'dialog', to: 'scene_60'},
+      {id: 'scene_58_seller_p2', talk: 'Подскажите, что смущает?', type: 'dialog', to: 'scene_60'},
+      {id: 'scene_58_seller_p3', talk: 'Хорошо. Приходите к нам еще, будем рады видеть Вас в нашем магазине Цифромаркет!', type: 'dialog', to: 'scene_59'},
+    ],
+    client: [
+      {id: 'scene_58_client_p1', talk: 'Как-то дороговато. Сомневаюсь, что нужен телефон за такую цену.', to: 'scene_60'},
+    ],
+  },
+
+  { title: 'scene_59', seller: [], client: [], message: { type: 'error', text: 'Клиент ушел, сотрудник не предпринял попытки выяснить в чем заключается сомнение клиента.', next: 'scene_58' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_60',
+    seller: [
+      {id: 'scene_60_seller_p1', talk: 'Я Вас понимаю - тоже сомневался перед покупкой своего телефона. Потом всё же решился и снова пришёл за ним - но цена уже подросла. В моём случае всего на 500р, но тоже ощутимо. Мы с Вами выбрали такую модель, которая с одной стороны точно подходит под Ваши пожелания, с другой стороны - надёжная и с запасом актуальности на несколько лет вперёд - из-за этого Вам не придётся его менять уже через пару лет, в отличие от более дешёвых моделей. Если телефон понравился - берите и не сомневайтесь.', type: 'dialog', to: 'scene_62'},
+      {id: 'scene_60_seller_p2', talk: 'Как подумаете - приходите.', type: 'dialog', to: 'scene_61'},
+    ],
+    client: [
+      {id: 'scene_60_client_p1', talk: 'Ну в принципе устройство меня устраивает. Давайте оформляем.', to: 'scene_62'},
+      {id: 'scene_60_client_p2', talk: 'Хорошо, спасибо.', to: 'scene_61'},
+    ],
+  },
+
+  { title: 'scene_61', seller: [], client: [], message: { type: 'error', text: 'Клиент ушел и не вернулся.', next: 'scene_60' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_62',
+    seller: [
+      {id: 'scene_62_seller_p1', talk: '', type: 'dialog', to: 'scene_'},
+      {id: 'scene_62_seller_p2', talk: '', type: 'dialog', to: 'scene_'},
+    ],
+    client: [
+      {id: 'scene_62_client_p1', talk: '', to: 'scene_'},
+      {id: 'scene_62_client_p2', talk: '', to: 'scene_'},
+    ],
+  },
 
 ];
 
