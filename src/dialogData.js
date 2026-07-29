@@ -418,14 +418,353 @@ export const dialogData = [
   {
     title: 'scene_62',
     seller: [
-      {id: 'scene_62_seller_p1', talk: '', type: 'dialog', to: 'scene_'},
-      {id: 'scene_62_seller_p2', talk: '', type: 'dialog', to: 'scene_'},
+      {id: 'scene_62_seller_p1', talk: 'Пойдёмте на кассу оплачивать. Вам плёнка, чехол, зарядка нужны?', type: 'dialog', to: 'scene_63'},
+      {id: 'scene_62_seller_p2', talk: 'Аксессуары будете брать? ', type: 'dialog', to: 'scene_64'},
+      {id: 'scene_62_seller_p3', talk: 'Так, посмотрим, что у нас есть к этому устройству. Что Вы больше предпочитаете, чехол книгу или накладку?', type: 'dialog', to: getRandomElement(['scene_65', 'scene_68'])},
     ],
     client: [
-      {id: 'scene_62_client_p1', talk: '', to: 'scene_'},
-      {id: 'scene_62_client_p2', talk: '', to: 'scene_'},
+      {id: 'scene_62_client_p1', talk: 'Нет.', to: 'scene_63'},
+      {id: 'scene_62_client_p2', talk: 'Нет.', to: 'scene_64'},
+      {id: 'scene_62_client_p3', talk: 'Сколько у Вас стоит накладка?', to: 'scene_65'},
+      {id: 'scene_62_client_p4', talk: 'Накладку.', to: 'scene_68'},
     ],
   },
+
+  { title: 'scene_63', seller: [], client: [], message: { type: 'error', text: 'Некорректное предложение аксессуаров. Клиент уже настроился оплатить только стоимость телефона, а на массовое предложение аксессуаров отказался одним ответом.', next: 'scene_62' }, emotion: 'unhappy' },
+
+  { title: 'scene_64', seller: [], client: [], message: { type: 'error', text: 'Некорректное и несвоевременное предложение аксессуаров.', next: 'scene_62' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_65',
+    seller: [
+      {id: 'scene_65_seller_p1', talk: '1390 рублей.', type: 'dialog', to: getRandomElement(['scene_66', 'scene_68'])},
+      {id: 'scene_65_seller_p2', talk: 'Цены на накладки, как и на телефоны, и на другие товары зависят от характеристик и материала, из которого они сделаны. Есть от 300 рублей и до 3500. Они отличаются долговечностью и степенью защиты. Давайте мы посмотрим, какая Вам подойдёт и тогда уже я смогу озвучить вам стоимость.', type: 'dialog', to: 'scene_68'},
+    ],
+    client: [
+      {id: 'scene_65_client_p1', talk: 'У Вас дорого, я на ВБ закажу дешевле.', to: 'scene_66'},
+      {id: 'scene_65_client_p2', talk: 'Ясно покажите, что есть?', to: 'scene_68'},
+    ],
+  },
+
+    {
+    title: 'scene_66',
+    seller: [
+      {id: 'scene_66_seller_p1', talk: 'У нас хорошие чехлы. Лучше чем у продавцов с ВБ. Они будут держаться дольше и лучше защищают от ударов.', type: 'dialog', to: 'scene_67'},
+      {id: 'scene_66_seller_p2', talk: 'Согласен, важно знать за что мы платим. У нас тоже есть чехлы за 300 р. Но дешевое не может быть хорошим. Я рекомендую вам взять вариант в средней ценовый категории, у нас это чехлы из термопластичного полиуретана - это материал гарантирует 100% защиту при падениях, они не выгорают, не растягиваются и служат практически вечно. Перед оплатой вы точно видите, за что платите, в отличие от ВБ - там сначала нужно заказать, потом дождаться, пойти получить и в итоге окажется, что под видом качественной вещи вам пришлют обычную накладку, которая спасёт только от мелких потёртостей.', type: 'dialog', to: getRandomElement(['scene_69', 'scene_68'])},
+    ],
+    client: [
+      {id: 'scene_66_client_p1', talk: 'Не надо.', to: 'scene_67'},
+      {id: 'scene_66_client_p2', talk: 'Нет, я в другом месте куплю.', to: 'scene_69'},
+      {id: 'scene_66_client_p3', talk: 'Ну хорошо, давайте.', to: 'scene_68'},
+    ],
+  },
+
+  { title: 'scene_67', seller: [], client: [], message: { type: 'error', text: 'Вы не продали чехол, так как у Вас была некорректная аргументация.', next: 'scene_68' }, emotion: 'unhappy' },
+
+  { title: 'scene_69', seller: [], client: [], message: {type: 'success', text: 'Вы грамотно отработали возражение, но не убедили клиента.', next: 'scene_68'}, emotion: 'unhappy' },
+
+  {
+    title: 'scene_68',
+    seller: [
+      {id: 'scene_68_seller_p1', talk: 'Вы же не будете с открытым экраном ходить? Давате подберем защиту для него. Как предпочитаете защищить, с помощью пленки или защитного стекла?', type: 'dialog', to: getRandomElement(['scene_70', 'scene_74', 'scene_78', 'scene_77'])},
+    ],
+    client: [
+      {id: 'scene_68_client_p1', talk: 'Сколько у Вас стоят пленки/стекла?', to: 'scene_70'},
+      {id: 'scene_68_client_p2', talk: 'Нет спасибо, я куплю в соседнем магазине.', to: 'scene_74'},
+      {id: 'scene_68_client_p3', talk: 'Нет спасибо, я куплю на WB.', to: 'scene_78'},
+      {id: 'scene_68_client_p4', talk: 'К: Да, дайте подберем.', to: 'scene_77'},
+    ],
+  },
+
+  {
+    title: 'scene_70',
+    seller: [
+      {id: 'scene_70_seller_p1', talk: 'С наклеиванием 1990 рублей.', type: 'dialog', to: 'scene_71'},
+      {id: 'scene_70_seller_p2', talk: '1590 рублей.', type: 'dialog', to: 'scene_71'},
+      {id: 'scene_70_seller_p3', talk: 'Цены начинаются от 500 до 3000 руб. Цена зависит от производителя, количества слоев и степенью защиты. Вам какой вариант подобрать побюджетней и который будет защищать от царапин или стекло/пленку, которое способно защищать от ударов?', type: 'dialog', to: 'scene_73'},
+    ],
+    client: [
+      {id: 'scene_70_client_p1', talk: 'Дорого. Я в соседнем магазине куплю дешевшле.', to: 'scene_71'},
+      {id: 'scene_70_client_p2', talk: 'Давайте, то которе от ударов буудет защищать.', to: 'scene_73'},
+    ],
+  },
+
+  {
+    title: 'scene_71',
+    seller: [
+      {id: 'scene_71_seller_p1', talk: 'Понимаю, важно знать за что мы платим. У нас в магазине, есть стекла/пленки стоимостью от 200 р., но такие стекла не способны защитить экран устройства в случае падения с 1,5 м высоты. Вы же хотите, чтобы ваше устройство было защищено в таких ситуациях?', type: 'dialog', to: 'scene_72'},
+      {id: 'scene_71_seller_p2', talk: 'Там качество плохое, а у нас хорошее.', type: 'dialog', to: 'scene_72'},
+    ],
+    client: [
+      {id: 'scene_71_client_p1', talk: 'Я подумаю. Если что, куплю чуть позже.', to: 'scene_72'},
+    ],
+  },
+
+  { title: 'scene_72', seller: [], client: [], message: { type: 'error', text: 'Клиент не купил стекло/пленку, так как Вы озвучили прямую стоимость товар, в такой ситуации лучше озввучить "вилку" стоимости или цену всего чека.', next: 'scene_79' }, emotion: 'unhappy' },
+
+  { title: 'scene_73', seller: [], client: [], message: {type: 'success', text: 'Вы грамотно отработали сомнения клиента и продадли стекло/пленку.', next: 'scene_79'}, emotion: 'unhappy' },
+
+  {
+    title: 'scene_74',
+    seller: [
+      {id: 'scene_74_seller_p1', talk: 'Понимаю. Если не секрет, сколько стекла стоят в соседнем магазине?', type: 'dialog', to: 'scene_76'},
+      {id: 'scene_74_seller_p2', talk: 'Понимаю. Но у нас стекла противоударные.', type: 'dialog', to: 'scene_75'},
+    ],
+    client: [
+      {id: 'scene_74_client_p1', talk: '500 рублей.', to: 'scene_76'},
+      {id: 'scene_74_client_p2', talk: 'Не надо.', to: 'scene_75'},
+    ],
+  },
+
+  { title: 'scene_75', seller: [], client: [], message: { type: 'error', text: 'Некорректная отработка возражения.', next: 'scene_79' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_76',
+    seller: [
+      {id: 'scene_76_seller_p1', talk: 'Понимаю, важно знать за что мы платим. У нас в магазине, также есть стекла/пленки стоимостью от 200 р., но такие стекла не способны защитить экран устройства в случае падения с 1,5 м высоты. Вы же хотите, чтобы ваше устройство было защищено в таких ситуациях?', type: 'dialog', to: 'scene_77'},
+    ],
+    client: [
+      {id: 'scene_76_client_p1', talk: 'К: Давайте, то которе от ударов будет защищать.', to: 'scene_77'},
+    ],
+  },
+
+  { title: 'scene_77', seller: [], client: [], message: {type: 'success', text: 'Вы грамотно отработали сомнения клиента и продадли стекло/пленку.', next: 'scene_79'}, emotion: 'unhappy' },
+
+  {
+    title: 'scene_78',
+    seller: [
+      {id: 'scene_78_seller_p1', talk: 'Понимаю. Если не секрет, сколько стекла стоят на маркетплейсе?', type: 'dialog', to: 'scene_76'},
+    ],
+    client: [
+      {id: 'scene_78_client_p1', talk: '500 рублей.', to: 'scene_76'},
+    ],
+  },
+
+  {
+    title: 'scene_79',
+    seller: [
+      {id: 'scene_79_seller_p1', talk: 'Помните, я Вам рассказывал про возможность увеличить оперативную память до 16 Гб, благодаря этому, ваше устройство будет работать шустрее и запускать более тяжелые приложения. Давайе я настрою ОС на устройстве, чтобы эту функцию можно было активировать?', type: 'dialog', to: getRandomElement(['scene_80', 'scene_86'])},
+      {id: 'scene_79_seller_p2', talk: 'Также можно перенести данные с вашего устройства на новое и увеличить оперативную память?', type: 'dialog', to: 'scene_87'},
+      {id: 'scene_79_seller_p3', talk: 'Давайте сразу активируем устройство?', type: 'dialog', to: 'scene_87'},
+    ],
+    client: [
+      {id: 'scene_79_client_p1', talk: 'Сколько это будет стоить?', to: 'scene_80'},
+      {id: 'scene_79_client_p2', talk: 'Хорошо, сделайте пожалуйста.', to: 'scene_86'},
+      {id: 'scene_79_client_p3', talk: 'Нет спасибо, я сам сделаю.', to: 'scene_87'},
+    ],
+  },
+
+  {
+    title: 'scene_80',
+    seller: [
+      {id: 'scene_80_seller_p1', talk: '2000 рублей.', type: 'dialog', to: getRandomElement(['scene_81', 'scene_83'])},
+      {id: 'scene_80_seller_p2', talk: 'Давайте я все вместе посчитаю и скажу сколько это будет стоить. Хорошо?', type: 'dialog', to: 'scene_85'},
+    ],
+    client: [
+      {id: 'scene_80_client_p1', talk: 'Дорого.', to: 'scene_81'},
+      {id: 'scene_80_client_p2', talk: 'Нет спасибо, я сам сделаю.', to: 'scene_83'},
+      {id: 'scene_80_client_p3', talk: 'Хорошо.', to: 'scene_85'},
+    ],
+  },
+
+  {
+    title: 'scene_81',
+    seller: [
+      {id: 'scene_81_seller_p1', talk: 'На первый взгляд так и правда может показаться. В тоже время если сравнивать с устройствами, где на борту стоят 16 Гб оперативной памяти - это очень низкая цена. Т.е. вы платите за 8 гБ, а фактически получаете 16 Гб, что позволит вам сэкономить, а устройству работать быстрее, что скажете?', type: 'dialog', to: 'scene_82'},
+    ],
+    client: [
+      {id: 'scene_81_client_p1', talk: 'Нет.', to: 'scene_82'},
+    ],
+  },
+
+  { title: 'scene_82', seller: [], client: [], message: { type: 'error', text: 'Вы грамотно отработали возражение, ваша ошибка в том, что вы допустили возражение: "Нет спасибо сделаю сам". В этой ситуации лучше озвучить "вилку" стоимости или предложить озвучить стоимость чека целиком.', next: 'scene_88' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_83',
+    seller: [
+      {id: 'scene_83_seller_p1', talk: 'Понимаю, кажется, что процесс можно выполнить без грамотного специалиста самому. В тоже время, чтобы увеличить оперативную память на смартфоне, необходимо доступ к правам разработчика, там вы можете например неправильно выставить скорость работы оперативной памяти и тогда устройство будет сильно греться, что приведет к быстрому выходу его из строя. Гораздо безопаснее, если воспользуетесь помощью специалиста. Что скажете, давайте сразу настроим, тем более что это займет не более 5 мнут?', type: 'dialog', to: 'scene_84'},
+    ],
+    client: [
+      {id: 'scene_83_client_p1', talk: 'Нет.', to: 'scene_84'},
+    ],
+  },
+
+  { title: 'scene_84', seller: [], client: [], message: { type: 'error', text: 'Вы грамотно отработали возражение, ваша ошибка в том, что вы допустили возражение: "Нет спасибо сделаю сам". В этой ситуации лучше озвучить "вилку" стоимости или предложить озвучить стоимость чека целиком.', next: 'scene_88' }, emotion: 'unhappy' },
+
+  { title: 'scene_85', seller: [], client: [], message: {type: 'success', text: 'Вы грамотно обошли возражение клиента.', next: 'scene_88'}, emotion: 'unhappy' },
+
+  { title: 'scene_86', seller: [], client: [], message: {type: 'success', text: 'Клиент согласился. Вы грамотно в привязке с потребности предложили настройки.', next: 'scene_88'}, emotion: 'unhappy' },
+
+  { title: 'scene_87', seller: [], client: [], message: { type: 'error', text: 'Некорректная формулировка при предложении настроек. Предложение было сделано без привязки к потребности клиента.', next: 'scene_88' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_88',
+    seller: [
+      {id: 'scene_88_seller_p1', talk: 'Скажите, Вам грантию стандартную или расширенную?', type: 'dialog', to: getRandomElement(['scene_89', 'scene_90'])},
+      {id: 'scene_88_seller_p2', talk: 'Скажите, Вам гарантию на 1 или 2 года?', type: 'dialog', to: 'scene_92'},
+      {id: 'scene_88_seller_p3', talk: 'Вам гарантию расширить?', type: 'dialog', to: 'scene_94'},
+      {id: 'scene_88_seller_p4', talk: 'Также могу предлоджить вам расширенную гарантию?', type: 'dialog', to: 'scene_94'},
+    ],
+    client: [
+      {id: 'scene_88_client_p1', talk: 'В чем разница?', to: 'scene_89'},
+      {id: 'scene_88_client_p2', talk: 'Она платная?', to: 'scene_90'},
+      {id: 'scene_88_client_p3', talk: 'Что она дает?', to: 'scene_92'},
+      {id: 'scene_88_client_p5', talk: 'Нет, спасибо.', to: 'scene_94'},
+    ],
+  },
+
+  {
+    title: 'scene_89',
+    seller: [
+      {id: 'scene_89_seller_p1', talk: 'Вы же телефоном планируете пользоваться года 3-4? Расширенная гарантия позволит защитить  ваш телефон на время всего или почти сего срока использования - если будет какая-то поломка, вы сможете просто обратиться к нам и мы всё решим.', type: 'dialog', to: 'scene_95'},
+    ],
+    client: [
+      {id: 'scene_89_client_p1', talk: 'Хорошо, давайте.', to: 'scene_95'},
+    ],
+  },
+
+  {
+    title: 'scene_90',
+    seller: [
+      {id: 'scene_90_seller_p1', talk: 'Да, платная, цена будет от 500 до 3000, в зависимости от устройства, давайте я все вместе посчитаю и скажу сколько будет стоить. Так как у Вас в чеке несколько позиций - будет скидка.', type: 'dialog', to: 'scene_92'},
+      {id: 'scene_90_seller_p2', talk: 'Да, разница между стандартной и расширенной 500р.', type: 'dialog', to: 'scene_92'},
+      {id: 'scene_90_seller_p3', talk: 'Да, будет стоить 2000 р.', type: 'dialog', to: 'scene_91'},
+    ],
+    client: [
+      {id: 'scene_90_client_p1', talk: 'Что она дает?', to: 'scene_92'},
+      {id: 'scene_90_client_p2', talk: 'Нет, спасибо.', to: 'scene_91'},
+    ],
+  },
+
+  { title: 'scene_91', seller: [], client: [], message: { type: 'error', text: 'Некорректная формулировка при отработке возражений. Рекомендуется озввучивать "вилку" стоимости или стоимость чека целиком.', next: 'scene_96' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_92',
+    seller: [
+      {id: 'scene_92_seller_p1', talk: 'Вы же телефоном планируете пользоваться года 3-4? Расширенная гарантия позволит защитить  ваш телефон на время всего или почти сего срока использования - если будет какая-то поломка, вы сможете просто обратиться к нам и мы всё решим.', type: 'dialog', to: 'scene_95'},
+      {id: 'scene_92_seller_p2', talk: 'Благодаря гарантии, вы сможете поменять ваше устройство на новое с доплатой или без, починить поломку бесплатно, а если устройство неремонтопригодно - вернуть деньги.', type: 'dialog', to: 'scene_95'},
+      {id: 'scene_92_seller_p3', talk: 'Тоже самое, что и гарантия от производителя.', type: 'dialog', to: 'scene_93'},
+    ],
+    client: [
+      {id: 'scene_90_client_p1', talk: 'Хорошо, давайте.', to: 'scene_95'},
+      {id: 'scene_90_client_p2', talk: 'Нет, спасибо.', to: 'scene_93'},
+    ],
+  },
+
+  { title: 'scene_93', seller: [], client: [], message: { type: 'error', text: 'Некорректная формулировка при отработке возражений.', next: 'scene_96' }, emotion: 'unhappy' },
+
+  { title: 'scene_94', seller: [], client: [], message: { type: 'error', text: 'Некорректное формулировка прри предложении ДСО.', next: 'scene_96' }, emotion: 'unhappy' },
+
+  { title: 'scene_95', seller: [], client: [], message: {type: 'success', text: 'Вы грамотно обошли возражение клиента.', next: 'scene_96'}, emotion: 'unhappy' },
+
+  {
+    title: 'scene_96',
+    seller: [
+      {id: 'scene_96_seller_p1', talk: 'Пока я всё посчитаю, подскажите, вы за связь сколько платите?', type: 'dialog', to: 'scene_98'},
+      {id: 'scene_96_seller_p2', talk: 'Вам сим карта не нужна?', type: 'dialog', to: 'scene_97'},
+    ],
+    client: [
+      {id: 'scene_96_client_p1', talk: '800 рублей выходит.', to: 'scene_98'},
+      {id: 'scene_96_client_p2', talk: 'Нет, спасибо.', to: 'scene_97'},
+    ],
+  },
+
+  { title: 'scene_97', seller: [], client: [], message: { type: 'error', text: 'Клиент отказался из-за неккоректного предложения.', next: 'scene_103' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_98',
+    seller: [
+      {id: 'scene_98_seller_p1', talk: 'Не хотите другую симку?', type: 'dialog', to: 'scene_100'},
+      {id: 'scene_98_seller_p2', talk: 'Ничего себе! Это какой у вас оператор?', type: 'dialog', to: 'scene_99'},
+    ],
+    client: [
+      {id: 'scene_98_client_p1', talk: 'Да нет, у меня уже давно она, не хочу менять.', to: 'scene_100'},
+      {id: 'scene_98_client_p2', talk: 'Мегафон.', to: 'scene_99'},
+    ],
+  },
+
+  {
+    title: 'scene_99',
+    seller: [
+      {id: 'scene_99_seller_p1', talk: 'Давайте попробуем другого оператора с большим наполнением и меньшей оплатой? За месяц посмотрите, как работает - если понравится, перенесёте номер. если не понравится - просто закроете и всё, согласны?', type: 'dialog', to: 'scene_103'},
+      {id: 'scene_99_seller_p2', talk: 'Другую не хотите попробовать?', type: 'dialog', to: 'scene_97'},
+    ],
+    client: [
+      {id: 'scene_99_client_p1', talk: 'Ну давайте попробуем.', to: 'scene_103'},
+      {id: 'scene_99_client_p2', talk: 'Нет.', to: 'scene_97'},
+    ],
+  },
+
+  {
+    title: 'scene_100',
+    seller: [
+      {id: 'scene_100_seller_p1', talk: 'Хорошо, понял.', type: 'dialog', to: 'scene_101'},
+      {id: 'scene_100_seller_p2', talk: 'Понимаю, у вас везде этот номер привязан и его все знакомые знают. Я предлагаю вам взять сим карту и протестировать один месяц: Если не понравится, просто закроете, а если будет ловить лучше и при этом она будет стоить дешевле - перенесёте свой номер на неё и всё. как вам?', type: 'dialog', to: getRandomElement(['scene_102', 'scene_103'])},
+    ],
+    client: [
+      {id: 'scene_100_client_p1', talk: 'Нет, не надо.', to: 'scene_102'},
+      {id: 'scene_100_client_p2', talk: 'Ну давайте попробуем.', to: 'scene_103'},
+    ],
+  },
+
+  { title: 'scene_101', seller: [], client: [], message: { type: 'error', text: 'У клиента было возражение, его можно было попробовать отработать.', next: 'scene_103' }, emotion: 'unhappy' },
+
+  { title: 'scene_102', seller: [], client: [], message: {type: 'success', text: 'Вы попробовали отработать возражение, но клиенту вторая сим карта не нужна, переходим дальше.', next: 'scene_103'}, emotion: 'unhappy' },
+
+  {
+    title: 'scene_103',
+    seller: [
+      {id: 'scene_103_seller_p1', talk: 'Что-нибудь ещё желаете?', type: 'dialog', to: 'scene_104'},
+      {id: 'scene_103_seller_p2', talk: 'Скажите, Вы на улице много времени проводите?', type: 'dialog', to: 'scene_105'},
+    ],
+    client: [
+      {id: 'scene_103_client_p1', talk: 'Нет.', to: 'scene_104'},
+      {id: 'scene_103_client_p2', talk: 'Ну да, летом то огороды, то во дворе что-то делать надо.', to: 'scene_105'},
+    ],
+  },
+
+  { title: 'scene_104', seller: [], client: [], message: { type: 'error', text: 'Некорректный вопрос.', next: 'scene_109' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_105',
+    seller: [
+      {id: 'scene_105_seller_p1', talk: 'Колонку не хотите купить?', type: 'dialog', to: 'scene_106'},
+      {id: 'scene_105_seller_p2', talk: 'Понимаю, на это всегда много времени уходит, ещё и в тишине приходится всё делать. Я себе для таких случаев вот такую колонку взял, она как раз сейчас по акции идёт - включаю на ней музыку или радио и сразу работать веселее, и время быстрее проходит, давайте покажу?', type: 'dialog', to: getRandomElement(['scene_107', 'scene_108'])},
+    ],
+    client: [
+      {id: 'scene_105_client_p1', talk: 'Нет, мне колонка не нужна.', to: 'scene_106'},
+      {id: 'scene_105_client_p2', talk: 'Нет, спасибо.', to: 'scene_107'},
+      {id: 'scene_105_client_p3', talk: 'Давайте посмотрим.', to: 'scene_108'},
+    ],
+  },
+
+  { title: 'scene_106', seller: [], client: [], message: { type: 'error', text: 'Некорректное предложение', next: 'scene_109' }, emotion: 'unhappy' },
+
+  { title: 'scene_107', seller: [], client: [], message: {type: 'success', text: 'Вы сделали всё правильно и предложили товар по акции. К сожалению, данного клиента это не заинтересовало, но следующий обязательно купит!', next: 'scene_109'}, emotion: 'unhappy' },
+
+  {
+    title: 'scene_108',
+    seller: [
+      {id: 'scene_108_seller_p1', talk: 'Давайте я посчитаю всё вместе с вашей скидкой?', type: 'dialog', to: 'scene_109'},
+    ],
+    client: [
+      {id: 'scene_108_client_p1', talk: 'Давайте.', to: 'scene_109'},
+    ],
+  },
+
+  {
+    title: 'scene_109',
+    seller: [
+      {id: 'scene_109_seller_p1', talk: '', type: 'dialog', to: 'scene_'},
+    ],
+    client: [
+      {id: 'scene_109_client_p1', talk: '', to: 'scene_'},
+    ],
+  },
+
+
+
+
 
 ];
 
