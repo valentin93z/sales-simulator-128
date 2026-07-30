@@ -755,16 +755,94 @@ export const dialogData = [
   {
     title: 'scene_109',
     seller: [
-      {id: 'scene_109_seller_p1', talk: '', type: 'dialog', to: 'scene_'},
+      {id: 'scene_109_seller_p1', talk: 'QR сможете оплатить?', type: 'dialog', to: 'scene_110'},
+      {id: 'scene_109_seller_p2', talk: 'ПК: С вас 48538 рублей, можете оплачивать.', type: 'dialog', to: 'scene_111'},
+      {id: 'scene_109_seller_p3', talk: 'Итак, у нас с вами: Honor X8d, чехол, плёнка, расширенная гарантия, сим карта и акционная музыкальная колонка. Общая сумма - 48538 руб. Ничего не забыл?', type: 'dialog', to: 'scene_112'},
     ],
     client: [
-      {id: 'scene_109_client_p1', talk: '', to: 'scene_'},
+      {id: 'scene_109_client_p1', talk: '...', to: 'scene_110'},
+      {id: 'scene_109_client_p2', talk: '...', to: 'scene_111'},
+      {id: 'scene_109_client_p3', talk: 'Всё верно.', to: 'scene_112'},
     ],
   },
 
+  { title: 'scene_110', seller: [], client: [], message: { type: 'error', text: 'Клиент ещё не знает, какая сумма его чека получилась.', next: 'scene_109' }, emotion: 'unhappy' },
+  
+  { title: 'scene_111', seller: [], client: [], message: { type: 'error', text: 'Некорректное завершение продажи.', next: 'scene_109' }, emotion: 'unhappy' },
 
+  {
+    title: 'scene_112',
+    seller: [
+      {id: 'scene_112_seller_p1', talk: 'Я вам сейчас оформлю нашу бесплатную бонусную карту, на которую уже с этой покупки вам будут начислены бонусы, она виртуальная и привязана к номеру телефона, хорошо?', type: 'dialog', to: 'scene_113'},
+    ],
+    client: [
+      {id: 'scene_112_client_p1', talk: 'Хорошо.', to: 'scene_113'},
+    ],
+  },
 
+  {
+    title: 'scene_113',
+    seller: [
+      {id: 'scene_113_seller_p1', talk: 'С Вас 48538 руб.', type: 'dialog', to: 'scene_114'},
+      {id: 'scene_113_seller_p2', talk: 'Сможете оплатить по QR?', type: 'dialog', to: 'scene_116'},
+      {id: 'scene_113_seller_p3', talk: 'У Вас оплата будет картой или наличными?', type: 'dialog', to: getRandomElement(['scene_115', 'scene_118'])},
+    ],
+    client: [
+      {id: 'scene_113_client_p1', talk: '...', to: 'scene_114'},
+      {id: 'scene_113_client_p2', talk: 'Наличными.', to: 'scene_118'},
+      {id: 'scene_113_client_p3', talk: 'Картой.', to: 'scene_115'},
+      {id: 'scene_113_client_p4', talk: 'Я не умею.', to: 'scene_116'},
+    ],
+  },
 
+  { title: 'scene_114', seller: [], client: [], message: { type: 'error', text: 'Предложите оплатить по QR.', next: 'scene_113' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_115',
+    seller: [
+      {id: 'scene_115_seller_p1', talk: 'Сможете оплатить по QR?', type: 'dialog', to: 'scene_116'},
+    ],
+    client: [
+      {id: 'scene_115_client_p1', talk: 'Я не умею.', to: 'scene_116'},
+    ],
+  },
+
+  {
+    title: 'scene_116',
+    seller: [
+      {id: 'scene_116_seller_p1', talk: 'Хорошо, тогда картой можете оплачивать.', type: 'dialog', to: 'scene_117'},
+      {id: 'scene_116_seller_p2', talk: 'Там очень быстро получается, давайте покажу - в будущем, если забудете карту, сможете оплатить любую покупку телефоном?', type: 'dialog', to: 'scene_118'},
+    ],
+    client: [
+      {id: 'scene_116_client_p1', talk: '...', to: 'scene_117'},
+      {id: 'scene_116_client_p2', talk: 'Хорошо, давайте.', to: 'scene_118'},
+    ],
+  },
+
+  { title: 'scene_117', seller: [], client: [], message: { type: 'error', text: 'Попробуйте отработать возражение "Я не умею".', next: 'scene_116' }, emotion: 'unhappy' },
+
+  {
+    title: 'scene_118',
+    seller: [
+      {id: 'scene_118_seller_p1', talk: 'Вот ваш чек. Поздравляем с отличной покупкой и напоминаю, что вы теперь наш клиент и вам доступно полное гарантийное и постгарантийное обслуживание как в нашей компании и нашем сервисном центре. Если что-то случится, даже после окончания гарантии - можете приносить к нам устройство и не беспокоиться о качестве выполненных работ и оригинальности комплектующих.', type: 'dialog', to: 'scene_119'},
+    ],
+    client: [
+      {id: 'scene_118_client_p1', talk: '...', to: 'scene_119'},
+    ],
+  },
+
+  {
+    title: 'scene_119',
+    seller: [
+      {id: 'scene_119_seller_p1', talk: 'Будем рады снова видеть вас в нашей компании Циформаркет!', type: 'dialog', to: 'scene_120'},
+      {id: 'scene_119_seller_p2', talk: 'До свидания!', type: 'dialog', to: 'scene_120'},
+    ],
+    client: [
+      {id: 'scene_119_client_p1', talk: 'До свидания!', to: 'scene_120'},
+    ],
+  },
+
+  { title: 'scene_120', seller: [], client: [], message: {type: 'success', text: 'Поздравляем! Вы прошли весь путь. Вы продали дополнительные товары и услуги, при этом все сделали правильно! Мы думаем, что вы готовы делать хорошие продажи! Удачи!', next: 'scene_121'}, emotion: 'unhappy' },
 
 ];
 
