@@ -95,7 +95,6 @@ k.scene("main", async () => {
             ]);
 
             playerLayer.add(player);
-            console.log(`Игрок создан на спавне: (${entity.x}, ${entity.y})`);
             break;
           }
         }
@@ -103,11 +102,16 @@ k.scene("main", async () => {
     }
   }
 
+  // Получаем кнопку из HTML
+  const interactBtn = document.getElementById("interact-btn");
+
+  // Массив для хранения активных зон взаимодействия
+  let currentNpc = null; // NPC, с которым можно взаимодействовать
+
   // Обрабатываем слой npcs
   for (const layer of layers) {
     if (layer.name === "npc" && layer.objects) {
       for (const npcData of layer.objects) {
-        // Создаём NPC
         const npc = k.add([
           k.sprite("npc"),
           k.area({ shape: new k.Rect(k.vec2(0), 64, 64) }),
@@ -118,24 +122,66 @@ k.scene("main", async () => {
           {
             dialogueId: npcData.properties?.dialogue || "scene_1",
             type: npcData.properties?.type || "customer",
+            isInteractable: false,
           }
         ]);
         
-        console.log(`NPC создан на позиции: (${npcData.x}, ${npcData.y})`);
       }
     }
   }
 
+  // При подходе к NPC показываем кнопку
   player.onCollide("npc", (npc) => {
     if (player.isInDialogue) return;
     
+    npc.isInteractable = true;
+    currentNpc = npc;
+    interactBtn.style.display = "block";
+  });
+
+  // Когда игрок выходит из зоны NPC
+  player.onCollideEnd("npc", (npc) => {
+    npc.isInteractable = false;
+    currentNpc = null;
+    interactBtn.style.display = "none";
+  });
+
+  // Обработка клика по кнопке
+  interactBtn.addEventListener("click", () => {
+    if (player.isInDialogue || !currentNpc) return;
+    
+    // Запускаем диалог
     player.isInDialogue = true;
     player.stop();
     
+    // Скрываем кнопку
+    interactBtn.style.display = "none";
+    
+    const npc = currentNpc;
+    currentNpc = null;
+    
     startDialogue(npc.dialogueId || "scene_1", () => {
       player.isInDialogue = false;
+      npc.isInteractable = false;
     });
   });
+
+  // Также можно оставить клавишу E как альтернативу
+  k.onKeyPress("e", () => {
+    if (player.isInDialogue || !currentNpc) return;
+    
+    // Кликаем по кнопке программно
+    interactBtn.click();
+  });
+
+  // В onUpdate можно обновлять состояние кнопки (если нужно)
+  k.onUpdate(() => {
+    // Если диалог открыт, скрываем кнопку
+    if (player.isInDialogue) {
+      interactBtn.style.display = "none";
+    }
+  });
+
 
   // Стены
   for (const layer of layers) {

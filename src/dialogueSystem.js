@@ -5,12 +5,21 @@ let isInDialogue = false;
 let onDialogueEnd = null;
 let pendingNextScene = null;
 let lastClientPhrase = null;
+let isTransitioning = false;
+let dialogueStartedFromScene = null;
 
 export function startDialogue(sceneId, onComplete) {
   if (isInDialogue) return;
   isInDialogue = true;
   onDialogueEnd = onComplete;
-  currentScene = currentScene ? currentScene : sceneId;
+  
+  if (!currentScene) {
+    currentScene = sceneId;
+    dialogueStartedFromScene = sceneId;
+  }
+  
+  lastClientPhrase = null;
+  isTransitioning = false;
   showCurrentScene();
 }
 
@@ -21,12 +30,12 @@ function showCurrentScene() {
     endDialogue();
     return;
   }
-  // Показываем сообщение об ошибке/успехе если есть
+  
   if (scene.message) {
     showMessage(scene.message);
     return;
   }
-  // Показываем варианты фраз продавца
+  
   showSellerOptions(scene.seller);
 }
 
@@ -40,82 +49,68 @@ function showSellerOptions(options) {
   dialogueUI.style.display = "block";
   closeBtn.style.display = "block";
   
-  // Заголовок с эмоцией клиента
   const currentSceneData = dialogData.find(s => s.title === currentScene);
   const emotionEmoji = getEmojiByEmotion(currentSceneData?.emotion);
-  dialogue.innerHTML = `<strong>Клиент ${emotionEmoji}</strong><br>${lastClientPhrase}`;
   
-  // Создаем кнопки для каждой фразы продавца
+  if (lastClientPhrase) {
+    dialogue.innerHTML = `<strong>Клиент ${emotionEmoji}</strong><br>${lastClientPhrase}`;
+  } else {
+    dialogue.innerHTML = `<strong>Клиент ${emotionEmoji}</strong><br>Выберите фразу:`;
+  }
+  
   options.forEach(option => {
     const btn = document.createElement("button");
     btn.className = "option-btn";
     
-    // Иконка в зависимости от типа
     const icon = option.type === 'action' ? '🚶' : '💬';
     btn.innerHTML = `${icon} ${option.talk}`;
     
     btn.onclick = () => {
-      // Определяем следующий сценарий
+      if (isTransitioning) return;
+      isTransitioning = true;
+      
       let nextScene = option.to;
       if (Array.isArray(nextScene)) {
         nextScene = getRandomElement(nextScene);
       }
       pendingNextScene = nextScene;
       
-      // Показываем фразу продавца
-      showSellerTalk(option.talk);
-      
-      // Находим ответ клиента
+      const currentSceneData = dialogData.find(s => s.title === currentScene);
       const clientResponse = currentSceneData.client.find(c => c.to === nextScene);
       
       if (clientResponse) {
         setTimeout(() => {
-          showClientTalk(clientResponse.talk, nextScene);
+          const dialogue = document.getElementById("dialogue");
+          dialogue.innerHTML = `<strong>Клиент:</strong><br>${clientResponse.talk}`;
+          
           lastClientPhrase = clientResponse.talk;
-        }, 500);
+          
+          setTimeout(() => {
+            transitionToScene(nextScene);
+            isTransitioning = false;
+          }, 0);
+        }, 50);
       } else {
         setTimeout(() => {
           transitionToScene(nextScene);
-        }, 500);
+          isTransitioning = false;
+        }, 50);
       }
     };
     
     optionsDiv.appendChild(btn);
   });
 
-
   const originalHandler = closeBtn.onclick;
   closeBtn.onclick = () => {
-    endDialogue();
-    
+    endDialogue(false);
     closeBtn.onclick = originalHandler;
   };
 }
 
-function showSellerTalk(text) {
-  const dialogue = document.getElementById("dialogue");
-  dialogue.innerHTML = `<strong>Продавец:</strong><br>${text}`;
-}
-
-function showClientTalk(text, nextScene) {
-  const dialogue = document.getElementById("dialogue");
-  const optionsDiv = document.getElementById("options");
-  
-  dialogue.innerHTML = `<strong>Клиент:</strong><br>${text}`;
-  
-  optionsDiv.innerHTML = "";
-  
-  const nextBtn = document.createElement("button");
-  nextBtn.className = "option-btn";
-  nextBtn.innerHTML = "Далее →";
-  nextBtn.onclick = () => {
-    transitionToScene(nextScene);
-  };
-  optionsDiv.appendChild(nextBtn);
-}
-
 function transitionToScene(nextScene) {
   currentScene = nextScene;
+  isTransitioning = false;
   showCurrentScene();
 }
 
@@ -144,14 +139,28 @@ function showMessage(message) {
   const originalHandler = closeBtn.onclick;
   closeBtn.onclick = () => {
     const nextScene = message.next || 'scene_1';
-    currentScene = nextScene;
     
-    if (message.type === 'success') {
+    if (isError) {
+      // Ошибка — переходим на указанную сцену (попробовать снова)
+      currentScene = nextScene;
+      lastClientPhrase = null;
+      showCurrentScene();
+    } else if (isSuccess) {
+      // Успех — переходим на следующую сцену, НЕ завершаем диалог
+      currentScene = nextScene;
+      lastClientPhrase = null;
+      
+      // Если есть эффект — выполняем
       if (window.gameEffects && window.gameEffects.completeSale) {
         window.gameEffects.completeSale();
       }
-      endDialogue();
+      
+      // Продолжаем диалог с новой сцены
+      showCurrentScene();
     } else {
+      // Обычное сообщение
+      currentScene = nextScene;
+      lastClientPhrase = null;
       showCurrentScene();
     }
     
@@ -159,10 +168,17 @@ function showMessage(message) {
   };
 }
 
-function endDialogue() {
+function endDialogue(resetScene = true) {
   const dialogueUI = document.getElementById("textbox-container");
   dialogueUI.style.display = "none";
   isInDialogue = false;
+  isTransitioning = false;
+  
+  if (resetScene) {
+    currentScene = null;
+    lastClientPhrase = null;
+    dialogueStartedFromScene = null;
+  }
   
   if (onDialogueEnd) {
     onDialogueEnd();
@@ -177,4 +193,16 @@ function getEmojiByEmotion(emotion) {
     case 'normal': return '🙂';
     default: return '🙂';
   }
+}
+
+export function resetDialogue() {
+  if (isInDialogue) {
+    endDialogue(true);
+  }
+  currentScene = null;
+  lastClientPhrase = null;
+}
+
+export function getCurrentScene() {
+  return currentScene;
 }

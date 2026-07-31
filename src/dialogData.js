@@ -740,7 +740,7 @@ export const dialogData = [
 
   { title: 'scene_106', seller: [], client: [], message: { type: 'error', text: 'Некорректное предложение', next: 'scene_109' }, emotion: 'unhappy' },
 
-  { title: 'scene_107', seller: [], client: [], message: {type: 'success', text: 'Вы сделали всё правильно и предложили товар по акции. К сожалению, данного клиента это не заинтересовало, но следующий обязательно купит!', next: 'scene_109'}, emotion: 'unhappy' },
+  { title: 'scene_107', seller: [], client: [], message: {type: 'success', text: 'Вы сделали всё правильно и предложили товар по акции. К сожалению, данного клиента это не заинтересовало, но следующий обязательно купит!', next: 'scene_109'}, emotion: 'normal' },
 
   {
     title: 'scene_108',
