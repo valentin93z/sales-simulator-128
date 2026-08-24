@@ -17,7 +17,7 @@ window.addEventListener('message', (event) => {
   const data = event.data;
   console.log('Команда из Next.js:', data);
 
-  if (data.type === 'NAME') {
+  if (data.type === 'SET_NAME') {
     document.getElementById("user").textContent = data.payload?.name;
   } else {
     console.log('Неизвестная команда:', data.type);
