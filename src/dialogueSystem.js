@@ -8,6 +8,16 @@ let lastClientPhrase = null;
 let isTransitioning = false;
 let dialogueStartedFromScene = null;
 
+function sendEventToParent(type, payload = null) {
+  if (window.parent !== window) {
+    window.parent.postMessage({
+      type: type,
+      payload: payload,
+      timestamp: Date.now()
+    }, '*'); // или 'https://cm-education.ru'
+  }
+}
+
 export function startDialogue(sceneId, onComplete) {
   if (isInDialogue) return;
   isInDialogue = true;
@@ -20,6 +30,7 @@ export function startDialogue(sceneId, onComplete) {
   
   lastClientPhrase = null;
   isTransitioning = false;
+  sendEventToParent('GAME_START', { current_scene: currentScene });
   showCurrentScene();
 }
 
