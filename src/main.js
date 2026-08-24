@@ -7,12 +7,22 @@ let money = gameConfig.startMoney;
 let salesCount = 0;
 let gameTime = 9;
 
-function updateUI() {
-  document.getElementById("money").textContent = money;
-  document.getElementById("sales").textContent = salesCount;
-  document.getElementById("daily-goal").textContent = salesCount;
-  document.getElementById("goal-target").textContent = gameConfig.dailyGoal;
-}
+window.addEventListener('message', (event) => {
+  // Проверяем, что сообщение от родителя
+  if (event.source !== window.parent) return;
+  
+  // Проверяем origin (должен быть ваш домен)
+  // if (event.origin !== 'https://cm-education.ru') return;
+
+  const data = event.data;
+  console.log('Команда из Next.js:', data);
+
+  if (data.type === 'NAME') {
+    document.getElementById("user").textContent = data.payload?.name;
+  } else {
+    console.log('Неизвестная команда:', data.type);
+  }
+});
 
 // Загрузка спрайтов (без анимаций)
 k.loadSprite("spritesheet", "./spritesheet.png", { sliceX: 8, sliceY: 8 });
@@ -446,7 +456,6 @@ function getExitMessage(choice) {
     }
   });
   
-  updateUI();
 });
 
 k.go("main");

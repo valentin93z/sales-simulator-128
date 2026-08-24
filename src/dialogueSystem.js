@@ -9,12 +9,15 @@ let isTransitioning = false;
 let dialogueStartedFromScene = null;
 
 function sendEventToParent(type, payload = null) {
+  console.log('📤 Отправка события:', type, payload);
   if (window.parent !== window) {
     window.parent.postMessage({
       type: type,
       payload: payload,
       timestamp: Date.now()
-    }, '*'); // или 'https://cm-education.ru'
+    }, '*');
+  } else {
+    console.warn('⚠️ window.parent === window, сообщение не отправлено');
   }
 }
 
