@@ -33,7 +33,7 @@ export function startDialogue(sceneId, onComplete) {
   
   lastClientPhrase = null;
   isTransitioning = false;
-  sendEventToParent('GAME_START', { current_scene: currentScene });
+  // sendEventToParent('GAME_START', { current_scene: currentScene });
   showCurrentScene();
 }
 
@@ -44,7 +44,7 @@ function showCurrentScene() {
     endDialogue();
     return;
   }
-  
+  sendEventToParent('SCENE_CHANGED', { current_scene: currentScene, timestamp: Date.now() });
   if (scene.message) {
     showMessage(scene.message);
     return;
